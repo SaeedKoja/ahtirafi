@@ -1,5 +1,4 @@
 import { useAuthStore } from "@/modules/auth/auth-store";
-import { useLangStore } from "@/shared/lang-store";
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import toast from "react-hot-toast";
 
@@ -11,12 +10,10 @@ export const httpClient = axios.create({
 });
 
 const appendAuthorizationHeaders = (config: AxiosRequestConfig<any>) => {
-  const lang = useLangStore.getState().lang;
   const accessToken = useAuthStore.getState().user?.access;
 
   if (!config.headers) config.headers = {};
   if (accessToken) config.headers.Authorization = `JWT ${accessToken}`;
-  config.headers["Accept-Language"] = lang;
 };
 
 httpClient.interceptors.request.use(
@@ -45,21 +42,8 @@ httpClient.interceptors.response.use(
   }
 );
 
-export type CommonRequestParams = {
-  "page-size"?: number;
-  page?: number;
-  ordering?: string | null;
-};
-
 export type BaseResponse<T> = {
   message: string;
   error_field: string | null;
   data: T;
 };
-
-export type PaginatedResponse<T> = BaseResponse<{
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: T[];
-}>;

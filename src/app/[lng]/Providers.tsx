@@ -1,8 +1,9 @@
 "use client";
 import NiceModal from "@ebay/nice-modal-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { PropsWithChildren } from "react";
+import { ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
+import ThemeRegistry from "./ThemeRegistry";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -12,13 +13,21 @@ const queryClient = new QueryClient({
   },
 });
 
-export const Providers = ({ children }: PropsWithChildren) => {
+export const Providers = ({
+  children,
+  lng,
+}: {
+  children: ReactNode;
+  lng: string;
+}) => {
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <NiceModal.Provider>{children}</NiceModal.Provider>
-      </QueryClientProvider>
-      <Toaster />
+      <ThemeRegistry lng={lng}>
+        <QueryClientProvider client={queryClient}>
+          <NiceModal.Provider>{children}</NiceModal.Provider>
+        </QueryClientProvider>
+        <Toaster />
+      </ThemeRegistry>
     </>
   );
 };

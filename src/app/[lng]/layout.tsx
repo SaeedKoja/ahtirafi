@@ -4,12 +4,14 @@ import { RootLayoutProps } from "@/shared/type";
 import { dir } from "i18next";
 import { languages } from "@/modules/i18n/settings";
 import localFont from "next/font/local";
+import NavBar from "@/shared/NavBar";
+import Footer from "@/shared/Footer";
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }));
 }
 
-const tajawal = localFont({
+export const tajawal = localFont({
   src: [
     {
       path: "../../../public/font/Tajawal-Regular.ttf",
@@ -23,13 +25,16 @@ const tajawal = localFont({
     {
       path: "../../../public/font/Tajawal-Bold.ttf",
       weight: "700",
-      style: "normal",
+    },
+    {
+      path: "../../../public/font/Tajawal-Black.ttf",
+      weight: "900",
     },
   ],
   variable: "--font-tajawal",
 });
 
-const vazirmatn = localFont({
+export const vazirmatn = localFont({
   src: [
     {
       path: "../../../public/font/Vazirmatn-Regular.ttf",
@@ -43,13 +48,12 @@ const vazirmatn = localFont({
     {
       path: "../../../public/font/Vazirmatn-Bold.ttf",
       weight: "700",
-      style: "normal",
     },
   ],
   variable: "--font-vazirmatn",
 });
 
-const cairo = localFont({
+export const cairo = localFont({
   src: [
     {
       path: "../../../public/font/Cairo-Regular.ttf",
@@ -63,7 +67,6 @@ const cairo = localFont({
     {
       path: "../../../public/font/Cairo-Bold.ttf",
       weight: "700",
-      style: "normal",
     },
   ],
   variable: "--font-cairo",
@@ -80,9 +83,17 @@ export default async function RootLayout({
         <meta name="description" content="Description" />
       </head>
       <body
-        className={`${vazirmatn.variable}`}
+        className={`${vazirmatn.variable} ${cairo.variable} ${tajawal.variable}`}
       >
-        <Providers>{children}</Providers>
+        <Providers lng={lng}>
+          <div className="tw-min-h-[100vh] tw-flex tw-flex-col tw-justify-between">
+            <div>
+              <NavBar lng={lng} />
+              {children}
+            </div>
+            <Footer lng={lng} />
+          </div>
+        </Providers>
       </body>
     </html>
   );

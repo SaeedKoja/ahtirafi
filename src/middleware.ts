@@ -9,6 +9,8 @@ export const config = {
 };
 
 export function middleware(req: NextRequest) {
+  if (req.nextUrl.pathname.startsWith("/images")) return;
+  
   let lng;
   if (req.cookies.has(cookieName)) {
     lng = acceptLanguage.get(req.cookies.get(cookieName)?.value);

@@ -14,6 +14,8 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  important: true,
+  prefix: "tw-",
   theme: {
     extend: {
       fontFamily: {
@@ -22,9 +24,7 @@ const config: Config = {
         tajawal: "var(--font-tajawal)",
       },
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "button-bg": "url('/public/images/backgrounds/button-bg.png')",
       },
       colors: {
         primary: {
@@ -68,12 +68,10 @@ const config: Config = {
       sm: "640px",
       md: "768px",
       lg: "1024px",
-      xl: "1280px",
+      xl: "1200px",
       "2xl": "1536px",
     },
   },
-  plugins: [
-    require("@headlessui/tailwindcss"),
-  ],
+  plugins: [require("@headlessui/tailwindcss")],
 };
 export default config;
